@@ -17,7 +17,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 X = 600
 Y = 600
-display_surface = pygame.display.set_mode((X, Y))
+display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption('Kogniliada')
 font = pygame.font.Font('freesansbold.ttf', 32)
 question = 0
@@ -63,19 +63,38 @@ while True:
 
     if sum(answers[question])==n_answers and not start or mistake==3:
         input("Czy mogę wyswietlić następne pytanie?")
-        team=int(input("Która grupa odpowiada? 1 lub 2 "))
+        team=input("Która grupa odpowiada? 1 lub 2 ")
+        while True:
+            if team.isdigit():
+                if team in ['1','2']:
+                    team = int(team)
+                    break
+            team = input("Niepoprawna wartość ")
         question +=1
         mistake = 0
     elif not start:
-        user_answer = int(input("0. niepoprawna odpowiedź\nJaką podano odpowiedź "))
-        if user_answer>0:
+        user_answer = input("0. niepoprawna odpowiedź\nJaką podano odpowiedź ")
+        while True:
+            if user_answer.isdigit():
+                if n_answers>=int(user_answer)>0:
+                    user_answer = int(user_answer)
+                    break
+            else:
+                user_answer = input("Niepoprawna wartość ")
+        if user_answer>0 and answers[question][user_answer-1]==0:
             n_points[team-1]+=int(dataset[question][(user_answer-1)*2+1])
             answers[question][user_answer-1]=1
         elif user_answer==0:
             mistake+=1
         print(answers)
     elif start:
-        team=int(input("Która grupa odpowiada? 1 lub 2 "))
+        team=input("Która grupa odpowiada? 1 lub 2 ")
+        while True:
+            if team.isdigit():
+                if team in ['1','2']:
+                    team = int(team)
+                    break
+            team = input("Niepoprawna wartość ")
         start=False
 
     if question==3:
