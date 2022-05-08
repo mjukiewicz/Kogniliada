@@ -26,6 +26,11 @@ def check_if_correct_val(user_answer):
             user_answer = input("Niepoprawna wartość ")
     return user_answer
 
+def select_display():
+    try: val = int(input("Na którym ekranie ma zostać wyświetlona kogniliada? "))
+    except ValueError: return 1
+    else: return val
+
 dataset = [["wzokowa", '60', "korowa", '25', "słuchowa", '15'],
 ["kanapka", '60', "pizza", '30', "zapiekanka", '5', "kebs", '5'],
 ["pralka", '50', "lodówka", '25', "zmywarka", '20', "kuchenka", '4', "mikrofalówka", '1']]
@@ -35,7 +40,7 @@ answers = [[0 for j in range(len(i)) if j%2] for i in dataset]
 pygame.init()
 black = (0, 0, 0)
 yellow = (255, 255, 0)
-display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, display=1)
+display_surface = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, display=select_display())
 X, Y = pygame.display.get_surface().get_size()
 pygame.display.set_caption('Kogniliada')
 font = pygame.font.Font('freesansbold.ttf', 80)
